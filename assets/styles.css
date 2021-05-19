@@ -1,0 +1,53 @@
+/* Simple dashboard grid */
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 50px 1fr 50px;
+    grid-template-areas:
+            "sidenav header"
+            "sidenav main"
+            "sidenav footer";
+    height: 100vh;
+}
+
+.header {
+    grid-area: header;
+    background-color: #648ca6;
+}
+
+.sidenav {
+    grid-area: sidenav;
+    background-color: #394263;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidenav__list {
+    padding: 0;
+    margin-top: 85px;
+    list-style-type: none;
+}
+
+.sidenav__list-item:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.main {
+    grid-area: main;
+    background-color: #8fd49d;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #648ca6;
+}
+
+.header .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background-color: #648ca6;
+}
