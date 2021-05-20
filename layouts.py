@@ -14,6 +14,17 @@ def create_header():
 def create_body():
     main = html.Main(
         className='main',
-        children=[])
+        children=[html.Header("Test", className='main-header'),
+                  html.Div(
+                      className='main-overview',
+                      children=[
+                          html.Div(["Overview"],
+                                   className="overview-card"),
+                          html.Div(["Overview"],
+                                   className="overview-card")
+                      ]
+                  )
+                  ]
+    )
 
     return main

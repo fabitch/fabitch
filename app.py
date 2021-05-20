@@ -1,7 +1,7 @@
 import dash
 import dash_html_components as html
 
-from layouts import create_header
+from layouts import create_header, create_body
 
 app = dash.Dash(__name__)
 
@@ -10,8 +10,7 @@ app.layout =\
              children=[create_header(),
                        html.Aside(className='sidenav',
                                   children=['Test']),
-                       html.Main(className='main',
-                                 children=['Test']),
+                       create_body(),
                        html.Footer(className='footer',
                                    children=['Test'])
                        ])

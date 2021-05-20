@@ -16,6 +16,7 @@
     background-color: #648ca6;
 }
 
+/* Sidenav stylings */
 .sidenav {
     grid-area: sidenav;
     background-color: #394263;
@@ -29,14 +30,30 @@
     list-style-type: none;
 }
 
+.sidenav__list-item {
+    padding: 20px 20px 20px 40px;
+    color: #ddd;
+}
+
 .sidenav__list-item:hover {
     background-color: rgba(255, 255, 255, 0.2);
     cursor: pointer;
 }
 
+
+/* main section styling */
 .main {
     grid-area: main;
     background-color: #8fd49d;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 20px;
+    height: 150px;
+    background-color: #e3e4e6;
 }
 
 .footer {
@@ -50,4 +67,54 @@
     justify-content: space-between;
     padding: 0 16px;
     background-color: #648ca6;
+}
+
+
+/* responsive grid cards */
+
+.main-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    grid-auto-rows: 94px;
+    grid-gap: 20px;
+    margin: 20px;
+}
+
+.overview-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #e3e4e6;
+}
+
+.main-cars {
+    column-count: 2;
+    column-gap: 20px;
+    margin: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: #82bef6;
+    margin-bottom: 20px;
+    -webkit-column-break-inside: avoid;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+/* Force varying heights to simulate dynamic content */
+.card:first-child {
+   height: 485px;
+}
+
+.card:nth-child(2) {
+    height: 200px;
+}
+
+.card:nth-child(3) {
+    height: 265px;
 }
