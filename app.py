@@ -4,6 +4,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import plotly.express as px
 import pandas as pd
+import numpy as np
 
 import yfinance as yf
 
@@ -20,7 +21,12 @@ app.layout = \
                        id='ticker',
                        options=[
                            {'label': 'Airbnb', 'value': 'ABNB'},
-                           {'label': 'Umicore SA', 'value': 'UMI.BR'}
+                           {'label': 'Umicore SA', 'value': 'UMI.BR'},
+                           {'label': 'Quantumscape', 'value': 'QS'},
+                           {'label': 'E.on SE', 'value': 'EONGY'},
+                           {'label': 'Volkswagen Group', 'value': 'VOW.DE'},
+                           {'label': 'Taiwan Semiconductor Manufacturing Company (TSMC)', 'value': 'TSM'},
+                           {'label': 'Oatly Group AB', 'value': 'OTLY'},
                        ],
                        value='ABNB'
                    )
@@ -83,13 +89,12 @@ def update_chart_one(ticker, options):
 
     charts.append(create_card_div_for_graph(px.line(daily_returns, title=title)))
 
-    return_dist = daily_returns.round(2).reset_index()
-    return_dist = return_dist.groupby('Close').count()
-
     # TODO: add line chart to bar chart to see distribution
     title = f"Distribution of daily Returns of {company_name} since " \
             f"{min(pd.to_datetime(daily_returns.index))}"
-    fig = px.bar(return_dist, title=title)
+    # TODO: dynamically compute bin number
+    fig = px.histogram(daily_returns, x=daily_returns.values, title=title,
+                       nbins=100)
     charts.append(create_card_div_for_graph(fig))
     return charts
 
