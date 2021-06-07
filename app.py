@@ -7,7 +7,6 @@ import pandas as pd
 
 import yfinance as yf
 
-DATA = yf.Ticker("ABNB")
 app = dash.Dash(__name__)
 
 app.layout = \
@@ -20,7 +19,8 @@ app.layout = \
                    dcc.Dropdown(
                        id='ticker',
                        options=[
-                           {'label': 'Airbnb', 'value': 'ABNB'}
+                           {'label': 'Airbnb', 'value': 'ABNB'},
+                           {'label': 'Umicore SA', 'value': 'UMI.BR'}
                        ],
                        value='ABNB'
                    )
@@ -68,11 +68,11 @@ def create_card_div_for_graph(figure):
     Input(component_id='ticker', component_property='value'),
     State(component_id='ticker', component_property='options')
 )
-def update_chart_one(ticker, label):
-    company_name = label[0]['label']
+def update_chart_one(ticker, options):
+    company_name = [x['label'] for x in options if x['value'] == ticker][0]
     charts = []
-    # data = yf.Ticker(ticker)
-    stock_prices = DATA.history('max')
+    data = yf.Ticker(ticker)
+    stock_prices = data.history('max')
     title = f"Stock Prices for {company_name}"
     fig = px.line(stock_prices, x=stock_prices.index,
                   y=['Open', 'High', 'Close'], title=title)
