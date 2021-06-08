@@ -3,6 +3,7 @@ from dash.dependencies import Input, Output, State
 import dash_html_components as html
 import dash_core_components as dcc
 import plotly.express as px
+import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 
@@ -57,10 +58,11 @@ app.layout = \
     )
 
 
-def create_card_div_for_graph(figure):
+def create_card_div_for_graph(figure, title: str):
     return html.Div(
         className='card',
         children=[
+            html.P(title),
             html.Div(
                 dcc.Graph(figure=figure),
                 style={'width': '100%'}
@@ -81,21 +83,24 @@ def update_chart_one(ticker, options):
     stock_prices = data.history('max')
     title = f"Stock Prices for {company_name}"
     fig = px.line(stock_prices, x=stock_prices.index,
-                  y=['Open', 'High', 'Close'], title=title)
-    charts.append(create_card_div_for_graph(fig))
+                  y=['Open', 'High', 'Close'],
+                  labels={'value': f"Stock price in {data.info['currency']}"}
+                  )
+    charts.append(create_card_div_for_graph(fig, title))
 
     title = f"Daily Returns of {company_name}"
     daily_returns = stock_prices['Close'].pct_change()
 
-    charts.append(create_card_div_for_graph(px.line(daily_returns, title=title)))
+    charts.append(create_card_div_for_graph(px.line(daily_returns), title))
 
     # TODO: add line chart to bar chart to see distribution
     title = f"Distribution of daily Returns of {company_name} since " \
             f"{min(pd.to_datetime(daily_returns.index))}"
     # TODO: dynamically compute bin number
-    fig = px.histogram(daily_returns, x=daily_returns.values, title=title,
+    fig = px.histogram(daily_returns, x=daily_returns.values,
                        nbins=100)
-    charts.append(create_card_div_for_graph(fig))
+
+    charts.append(create_card_div_for_graph(fig, title))
     return charts
 
 
